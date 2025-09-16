@@ -1,0 +1,31 @@
+import js from "@eslint/js";
+import prettierPlugin from "eslint-plugin-prettier";
+import unusedImportsPlugin from "eslint-plugin-unused-imports";
+import { globalIgnores } from "eslint/config";
+import globals from "globals";
+import tseslint from "typescript-eslint";
+
+export default tseslint.config([
+  globalIgnores(["dist"]),
+  {
+    files: ["**/*.{ts,tsx}"],
+
+    plugins: {
+      prettier: prettierPlugin,
+      "unused-imports": unusedImportsPlugin,
+    },
+    rules: {
+      "prettier/prettier": "error",
+      "unused-imports/no-unused-imports": "error",
+      "unused-imports/no-unused-vars": ["warn", { vars: "all", varsIgnorePattern: "^_", argsIgnorePattern: "^_" }],
+    },
+    extends: [js.configs.recommended, tseslint.configs.recommended],
+    languageOptions: {
+      ecmaVersion: 2025,
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
+    },
+  },
+]);

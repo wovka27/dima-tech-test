@@ -1,0 +1,28 @@
+@use 'helpers/index' as *;
+
+:root {
+  --color-light: #ffffff;
+  --color-light-body: #e5e5e5;
+
+  --color-dark: rgba(37, 47, 74, 1);
+  --color-dark-10: #00000020;
+  --color-dark-20: #00000033;
+
+  --color-red: #d72323;
+
+  --color-blue: #1B84FF;
+  --color-blue-2: #6243E6;
+
+  --border: 1px solid var(--color-dark-15);
+
+  --border-radius-4: 4px;
+  --border-radius-8: 8px;
+  --border-radius-10: 10px;
+  --border-radius-16: 16px;
+
+  --shadow: 0 0 0 3px #191919;
+
+  --font-family-base: Inter, sans-serif;
+
+  --transition-duration: 0.2s;
+}
