@@ -8,7 +8,7 @@ defineProps<InputProps>();
 </script>
 
 <template>
-  <div class="ui-field-container-wrap">
+  <div class="ui-field-container-wrap" @click="$emit('onClick')">
     <label class="ui-field-container" v-bind="$attrs">
       <span class="ui-field-container__label" v-if="label">{{label}}</span>
       <slot />
