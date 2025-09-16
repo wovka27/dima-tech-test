@@ -101,7 +101,7 @@
 </script>
 
 <template>
-  <div v-if="model.length" class="sector-list">
+  <div class="sector-list">
     <SectorItem
       v-for="sector of model"
       :key="sector.id"
