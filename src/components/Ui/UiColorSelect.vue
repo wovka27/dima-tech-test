@@ -115,7 +115,7 @@
   };
   const getRuName = (hex: string) => {
     const key = hex.trim().toUpperCase();
-    return hexToRuName[key] ?? null;
+    return hexToRuName[key] ?? 'кастомный';
   };
 
   defineProps<IColorPickerProps>();
@@ -132,12 +132,11 @@
     <div class="ui-color-select">
       <input :tabindex="0" id="val" :value="nameColor" disabled />
       <div style="display: flex; gap: 10px; align-items: center">
-        <ColorPreview v-if="model" :value="model" :width="24" :height="24" />
+        <ColorPreview :value="model || '#000'" :width="24" :height="24" />
         <svg
           :style="`rotate: ${isOpen ? 0 : 180}deg`"
           viewBox="0 0 16 16"
           xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
           width="16.000000"
           height="16.000000"
           fill="none"
