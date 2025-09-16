@@ -239,7 +239,7 @@
 
   const skipEmit = ref(false);
   const isSettingText = ref(false);
-  const rawTextValue = ref('');
+  const rawValue = ref('');
 
   const prefix = computed(() => {
     switch (format.value) {
@@ -258,6 +258,44 @@
   });
 
   const isShowAlpha = computed<boolean>(() => ['hexa', 'rgba', 'hsla'].includes(format.value));
+
+  const formatValue = (raw: string, f: Format): string => {
+    raw = typeof raw === 'string' ? raw.trim() : String(raw ?? '');
+
+    switch (f) {
+      case 'hex':
+      case 'hexa':
+        return raw ? `#${raw.toUpperCase()}` : '';
+      case 'rgb':
+        return raw ? `rgb(${raw})` : '';
+      case 'rgba':
+        return raw ? `rgba(${raw})` : '';
+      case 'hsl':
+        return raw ? `hsl(${raw})` : '';
+      case 'hsla':
+        return raw ? `hsla(${raw})` : '';
+      default:
+        return raw;
+    }
+  }
+
+
+  const parseValue = (full: string, f: Format): string => {
+    if (!full) return '';
+
+    switch (f) {
+      case 'hex':
+      case 'hexa':
+        return full.replace(/^#/, '');
+      case 'rgb':
+      case 'rgba':
+      case 'hsl':
+      case 'hsla':
+        return full.replace(/^[a-z]+\(/i, '').replace(/\)$/, '');
+      default:
+        return full;
+    }
+  }
 
   const updateColorLocal = () => {
     const { r, g, b } = hsvToRgb(hue.value, saturation.value, value.value);
@@ -317,7 +355,7 @@
   };
 
   const handleRawInput = () => {
-    const full = prefix.value + rawTextValue.value + (prefix.value.includes('(') ? ')' : '');
+    const full = prefix.value + rawValue.value + (prefix.value.includes('(') ? ')' : '');
     textValue.value = full;
   };
 
@@ -400,6 +438,16 @@
     });
   });
 
+
+  watch([rawValue], (val) => {
+    model.value = formatValue(val, format.value);
+  });
+
+
+  watch([model, format], ([val, f]) => {
+    rawValue.value = parseValue(val, f);
+  });
+
   onMounted(() => {
     if (svCanvas.value) {
       ctx.value = svCanvas.value.getContext('2d');
@@ -432,7 +480,7 @@
       <div style="display: flex; flex-direction: column; gap: 8px; justify-content: center; width: 100%">
         <div class="color-input">
           <span class="prefix">{{ prefix }}</span>
-          <input v-model="rawTextValue" @input="handleRawInput" />
+          <input v-model="rawValue" @input="handleRawInput" />
         </div>
         <div class="format-label">{{ format.toUpperCase() }}</div>
       </div>
