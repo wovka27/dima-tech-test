@@ -3,7 +3,7 @@
   import type { Sector } from '@/types/sector.ts';
 
   interface SectorItemProps {
-    data: Sector;
+    data?: Sector;
   }
 
   const props = defineProps<SectorItemProps>();
@@ -13,11 +13,12 @@
     (event: 'remove'): void;
   }>();
 
-  const colorStyle = computed(() => `background-color: ${props.data.color ?? '#fff'};`);
+  const colorStyle = computed(() => `background-color: ${props.data?.color ?? '#fff'};`);
 </script>
 
 <template>
-  <div class="sector-item">
+  <div v-if="!data" class="sector-item" :class="{ 'sector-item--empty': !data }">Список пуст...</div>
+  <div v-else class="sector-item">
     <div>{{ data.name }}</div>
     <div class="sector-item__separator"></div>
     <div>{{ data.value }}%</div>
@@ -25,7 +26,14 @@
     <div :style="colorStyle" class="sector-item__color"></div>
     <div class="sector-item__actions">
       <button class="sector-item__action" @click="$emit('edit')">
-        <svg class viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24.000000" height="24.000000" fill="none">
+        <svg
+          class
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24.000000"
+          height="24.000000"
+          fill="none"
+        >
           <rect id="Line / Edit" width="24.000000" height="24.000000" x="0.000000" y="0.000000" />
           <path
             id="Vector"
@@ -71,6 +79,13 @@
     transition-duration: var(--transition-duration);
     transition-property: background-color;
     padding: 18px 20px;
+
+    &--empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 65.8px;
+    }
 
     @include hover {
       background-color: rgba(219, 223, 233, 0.4);

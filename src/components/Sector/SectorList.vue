@@ -7,9 +7,9 @@
   import UiSelect from '@/components/Ui/Select/UiSelect.vue';
   import UiSelectItem from '@/components/Ui/Select/UiSelectItem.vue';
   import UiButton from '@/components/Ui/UiButton.vue';
+  import UiColorSelect from '@/components/Ui/UiColorSelect.vue';
   import UiInput from '@/components/Ui/UiInput.vue';
   import type { Sector } from '@/types/sector.ts';
-  import UiColorSelect from '@/components/Ui/UiColorSelect.vue';
 
   const model = defineModel<Sector[]>({
     default: [],
@@ -102,13 +102,16 @@
 
 <template>
   <div class="sector-list">
-    <SectorItem
-      v-for="sector of model"
-      :key="sector.id"
-      :data="sector"
-      @edit="openModal(sector.id)"
-      @remove="removeSector(sector.id)"
-    />
+    <SectorItem v-if="!model.length" is-empty />
+    <template v-else>
+      <SectorItem
+        v-for="sector of model"
+        :key="sector.id"
+        :data="sector"
+        @edit="openModal(sector.id)"
+        @remove="removeSector(sector.id)"
+      />
+    </template>
     <UiButton class="sector-list__btn" @click="openModal()">Добавить сектор</UiButton>
     <BaseModal form-id="sector-modal" v-model="isOpen" title="HUI" @on-cancel="onCancel">
       <template #body="{ formId, closeModal }">
