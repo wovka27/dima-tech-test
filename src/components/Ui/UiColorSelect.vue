@@ -130,7 +130,7 @@
 <template>
   <UiFieldContainer :error="error" :label="label" @on-click="isOpen = !isOpen">
     <div class="ui-color-select">
-      <input id="val" :value="nameColor" disabled />
+      <input inert id="val" :value="nameColor" />
       <ColorPreview v-if="model" :value="model" :width="24" :height="24" />
     </div>
   </UiFieldContainer>
