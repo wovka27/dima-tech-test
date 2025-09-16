@@ -146,6 +146,7 @@
     min-height: 24px;
 
     input:disabled {
+      pointer-events: none;
       background-color: transparent;
     }
   }
