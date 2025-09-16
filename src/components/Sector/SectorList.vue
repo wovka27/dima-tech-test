@@ -39,7 +39,7 @@
     });
   };
 
-  const formTitle = computed(() => `${isEdit ? 'Изменение': 'Добавление'} сектора`)
+  const formTitle = computed(() => `${isEdit.value ? 'Изменение': 'Добавление'} сектора`)
 
   const getCurrentSectorIndex = (id: Sector['id']) => {
     return model.value.findIndex((sector) => sector.id === id);
