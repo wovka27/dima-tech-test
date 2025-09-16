@@ -111,7 +111,7 @@
     '#808000': 'оливковый',
     '#9ACD32': 'ярко-зелёный',
     '#7FFFD4': 'аквамарин',
-    '#800000': 'тёмно-коричневый'
+    '#800000': 'тёмно-коричневый',
   };
   const getRuName = (hex: string) => {
     const key = hex.trim().toUpperCase();
@@ -130,8 +130,39 @@
 <template>
   <UiFieldContainer :error="error" :label="label" @on-click="isOpen = !isOpen">
     <div class="ui-color-select">
-      <input id="val" :value="nameColor" disabled />
-      <ColorPreview v-if="model" :value="model" :width="24" :height="24" />
+      <input :tabindex="0" id="val" :value="nameColor" disabled />
+      <div style="display: flex; gap: 10px; align-items: center">
+        <ColorPreview v-if="model" :value="model" :width="24" :height="24" />
+        <svg
+          :style="`rotate: ${isOpen ? 0 : 180}deg`"
+          viewBox="0 0 16 16"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          width="16.000000"
+          height="16.000000"
+          fill="none"
+          customFrame="#000000"
+        >
+          <rect
+            id="line / arrow"
+            width="16.000000"
+            height="16.000000"
+            x="0.000000"
+            y="0.000000"
+            fill="rgb(255,255,255)"
+            fill-opacity="0"
+            transform="matrix(-4.37114e-08,1,1,4.37114e-08,0,0)"
+          />
+          <path
+            id="Vector"
+            d="M0 0L3.64645 3.64645C3.84171 3.84171 4.15829 3.84171 4.35355 3.64645L8 0"
+            stroke="rgb(153,161,183)"
+            stroke-linecap="round"
+            stroke-width="1.29999995"
+            transform="matrix(-1,-3.17865e-08,3.17865e-08,-1,12,10)"
+          />
+        </svg>
+      </div>
     </div>
   </UiFieldContainer>
   <ColorPicker v-if="isOpen" v-model="model" />

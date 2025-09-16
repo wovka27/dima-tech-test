@@ -38,7 +38,7 @@ defineProps<InputProps>();
     outline: none;
   }
 
-  &:has(input:focus),
+  &:has(*:focus),
   &:focus-visible {
     border-color: rgba(27, 132, 255, 1);
   }
